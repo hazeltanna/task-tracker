@@ -48,8 +48,8 @@ function App() {
     }
   }
 
-  async function toggleTask(index) {
-    const currentTask = tasks[index];
+  async function toggleTask(id) {
+    const currentTask = tasks.find((item) => item.id === id);
 
     try {
       const response = await fetch(
@@ -67,18 +67,19 @@ function App() {
 
       const updatedTask = await response.json();
 
-      const updatedTasks = [...tasks];
-      updatedTasks[index] = updatedTask;
+     const updatedTasks = tasks.map((item) =>
+  item.id === id ? updatedTask : item
+);
 
-      setTasks(updatedTasks);
+setTasks(updatedTasks);
     } catch (error) {
       console.error(error);
       alert("Could not update task");
     }
   }
 
-  async function deleteTask(index) {
-    const currentTask = tasks[index];
+  async function deleteTask(id) {
+  const currentTask = tasks.find((item) => item.id === id);
 
     try {
       await fetch(
@@ -88,7 +89,7 @@ function App() {
         }
       );
 
-      setTasks(tasks.filter((_, i) => i !== index));
+      setTasks(tasks.filter((item) => item.id !== id));
     } catch (error) {
       console.error(error);
       alert("Could not delete task");
@@ -192,7 +193,7 @@ function App() {
                 <div className="task-left">
                   <button
                     className="checkbox"
-                    onClick={() => toggleTask(index)}
+                    onClick={() => toggleTask(item.id)}
                   >
                     {item.completed ? "✓" : ""}
                   </button>
