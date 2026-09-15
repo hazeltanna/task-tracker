@@ -53,7 +53,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `${API_URL}/tasks/${currentTask.id}`
+        `${API_URL}/tasks/${currentTask.id}`,
         {
           method: "PUT",
           headers: {
@@ -82,7 +82,7 @@ function App() {
 
     try {
       await fetch(
-        `${API_URL}/tasks/${currentTask.id}`
+        `${API_URL}/tasks/${currentTask.id}`,
         {
           method: "DELETE",
         }
