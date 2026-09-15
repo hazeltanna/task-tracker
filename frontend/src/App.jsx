@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:3001";
 function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
@@ -10,8 +10,8 @@ function App() {
     async function loadTasks() {
       try {
         const response = await fetch(
-          "http://127.0.0.1:3001/tasks"
-        );
+  `${API_URL}/tasks`
+);
 
         const data = await response.json();
         setTasks(data);
@@ -28,7 +28,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:3001/tasks",
+        `${API_URL}/tasks`,
         {
           method: "POST",
           headers: {
@@ -53,7 +53,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:3001/tasks/${currentTask.id}`,
+        `${API_URL}/tasks/${currentTask.id}`
         {
           method: "PUT",
           headers: {
@@ -82,7 +82,7 @@ function App() {
 
     try {
       await fetch(
-        `http://127.0.0.1:3001/tasks/${currentTask.id}`,
+        `${API_URL}/tasks/${currentTask.id}`
         {
           method: "DELETE",
         }
