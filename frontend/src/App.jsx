@@ -92,13 +92,6 @@ setTasks(updatedTasks);
   }
 }
 
-      setTasks(tasks.filter((item) => item.id !== id));
-    } catch (error) {
-      console.error(error);
-      alert("Could not delete task");
-    }
-  }
-
   const completedTasks = tasks.filter(
     (item) => item.completed
   ).length;
