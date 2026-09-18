@@ -50,6 +50,7 @@ function App() {
 
   async function toggleTask(id) {
     const currentTask = tasks.find((item) => item.id === id);
+    if (!currentTask) return;
 
     try {
       const response = await fetch(
@@ -79,15 +80,17 @@ setTasks(updatedTasks);
   }
 
   async function deleteTask(id) {
-  const currentTask = tasks.find((item) => item.id === id);
+  try {
+    await fetch(`${API_URL}/tasks/${id}`, {
+      method: "DELETE",
+    });
 
-    try {
-      await fetch(
-        `${API_URL}/tasks/${currentTask.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+    setTasks(tasks.filter((item) => item.id !== id));
+  } catch (error) {
+    console.error(error);
+    alert("Could not delete task");
+  }
+}
 
       setTasks(tasks.filter((item) => item.id !== id));
     } catch (error) {
@@ -205,7 +208,7 @@ setTasks(updatedTasks);
 
                 <button
                   className="delete-button"
-                  onClick={() => deleteTask(index)}
+                  onClick={() => deleteTask(item.id)}
                 >
                   Delete
                 </button>
